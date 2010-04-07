@@ -20,3 +20,9 @@ scalableicons_DATA = \
 	desktop-webmail.svg \
 	$(NULL)
 
+appsdir = ${datadir}/applications/
+apps_in_files = desktop-webmail.desktop.in
+apps_DATA = $(apps_in_files:.desktop.in=.desktop)
+
+@INTLTOOL_DESKTOP_RULE@
+
