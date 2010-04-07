@@ -61,6 +61,7 @@ static struct _Config *global_config;
 static gchar *cache_dir = NULL;
 static gchar *config_dir = NULL;
 static gchar *config_path = NULL;
+static gboolean cancelled = FALSE;
 
 
 static gboolean
@@ -321,6 +322,7 @@ dialog_response_cb (GtkDialog *dialog,
 		update_mailto_preference (dialog, form_widgets);
 		break;
 	case GTK_RESPONSE_REJECT:
+		cancelled = TRUE;
 		break;
 	default:
 		g_return_if_reached ();
@@ -430,7 +432,7 @@ int main (int argc, char **argv)
 
 	/* if we have an url (argc > 1); parse, and fire up webmail url using
 	   xdg-open */
-	if (argc > 1) {
+	if (argc > 1 && !cancelled) {
 		url = fill_url_template_from_mailto (global_config->default_url, argv[1]);
 		command = g_strdup_printf ("xdg-open %s", url);
 		printf ("running: %s\n", command);
