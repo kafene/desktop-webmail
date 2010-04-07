@@ -1,0 +1,9 @@
+_Name=Webmail
+_Generic Name=Email
+_Comment=Compose email in browser
+Exec=desktop-webmail %s
+Icon=desktop-webmail
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=GNOME;GTK;Settings;DesktopSettings;Application;Network;Email

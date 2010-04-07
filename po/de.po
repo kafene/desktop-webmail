@@ -1,0 +1,43 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: desktop-webmail\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-04-07 02:31+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Alexander Sack <asac@ubuntu.com>\n"
+"Language-Team: Ubuntu Mobile Team\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: de\n"
+"X-Poedit-Country: DE\n"
+
+#: ../src/desktop-webmail.c:317
+msgid "Webmail Configuration"
+msgstr "Webmail Konfiguration"
+
+#: ../src/desktop-webmail.c:328
+msgid "Select your webmail provider:"
+msgstr "Wähle Deinen Webmail-Anbieter:"
+
+#: ../src/desktop-webmail.c:354
+msgid "Ask everytime"
+msgstr "Immer fragen"
+
+#: ../data/desktop-webmail.desktop.in.h:1
+msgid "Compose email in browser"
+msgstr "EMail in Browser schreiben"
+
+#: ../data/desktop-webmail.desktop.in.h:2
+msgid "Email"
+msgstr ""
+
+#: ../data/desktop-webmail.desktop.in.h:3
+msgid "Webmail"
+msgstr ""
+
+#~ msgid "Don't ask again"
+#~ msgstr "Nicht mehr fragen"
+#~ msgid "Remember"
+#~ msgstr "Auswahl erinnern"
+

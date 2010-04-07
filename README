@@ -1,0 +1,12 @@
+README (by Alexander Sack <asac@canonical.com>)
+=================================================
+
+ * to build run sh autogen.sh and then use ./configure and make
+ * data/webmailers.ini has the meta data for supported webmailers
+ * currently there is no way to add more webmailers, e.g. in user config
+ * current used webmailer is saved on a per-user base; in
+   $HOME/.config/desktop-webmail.ini
+ * we require glib and gtk+ atm.
+ * we assume xdg-open does the right thing and also rely on it being
+   on the system
+
