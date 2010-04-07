@@ -3,10 +3,10 @@
 <default-apps>
   <mail-readers>
     <mail-reader>
-      <name>GMail</name>
-      <executable>desktop-webmail --type=GMAIL</executable>
-      <command>desktop-webmail-mailto --type=GMAIL %s</command>
-      <icon-name>mail-emblem</icon-name>
+      <name>Desktop Webmail</name>
+      <executable>desktop-webmail</executable>
+      <command>desktop-webmail %s</command>
+      <icon-name>desktop-webmail</icon-name>
       <run-in-terminal>false</run-in-terminal>
       <netscape-remote>false</netscape-remote>
     </mail-reader>
