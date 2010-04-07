@@ -1,5 +1,5 @@
 _Name=Webmail
-_Generic Name=Email
+_GenericName=Email
 _Comment=Compose email in browser
 Exec=desktop-webmail %s
 Icon=desktop-webmail
