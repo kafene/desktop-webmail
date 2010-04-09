@@ -21,8 +21,8 @@ msgid "Select your webmail provider:"
 msgstr "Wähle Deinen Webmail-Anbieter:"
 
 #: ../src/desktop-webmail.c:354
-msgid "Ask everytime"
-msgstr "Immer fragen"
+msgid "Ask again"
+msgstr "Erneut fragen"
 
 #: ../data/desktop-webmail.desktop.in.h:1
 msgid "Compose email in browser"

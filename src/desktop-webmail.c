@@ -387,7 +387,7 @@ run_gtk_config (gint *argcp, gchar*** argvp)
 
 	gtk_box_pack_start (GTK_BOX (content_box), combo, TRUE, TRUE, 10);
 
-	remember_checkbox = gtk_check_button_new_with_label (_("Ask everytime"));
+	remember_checkbox = gtk_check_button_new_with_label (_("Ask again"));
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (remember_checkbox),
 	                              !global_config->remember);
