@@ -17,6 +17,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <sys/stat.h>
+#include <sys/types.h>
+
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 
@@ -86,9 +89,6 @@ static void
 load_config_from_ini (struct _Config *config)
 {
 	GKeyFile *keyfile = g_key_file_new ();
-	gchar **groups;
-	gint groups_len, i;
-	GError *error = NULL;
 
 	g_key_file_load_from_file (keyfile, config_path, G_KEY_FILE_KEEP_COMMENTS, NULL);
 
@@ -108,7 +108,8 @@ load_model_from_ini (GtkTreeStore *store)
 {
 	GKeyFile *keyfile = g_key_file_new ();
 	gchar **groups;
-	gint groups_len, i, default_i = 0;
+	gint i, default_i = 0;
+	gsize groups_len;
 	const gchar *paths[] = { WEBMAILER_KEYFILE_PATH_DEFAULT, "." };
 
 	textdomain (GETTEXT_PACKAGE);
@@ -123,16 +124,15 @@ load_model_from_ini (GtkTreeStore *store)
 	for (i = 0; i < groups_len; i++) {
 		GtkTreeIter iter;
 		gchar *group_name = g_strdup (groups[i]);
-		if (!g_strcmp0 (group_name, global_config->default_provider))
-			default_i = i;
-		gint id = g_key_file_get_integer (keyfile, groups[i], "ID", NULL);
 		gchar *icon_url = g_key_file_get_string (keyfile, groups[i], "ICON", NULL);
 		gchar *action_url = g_key_file_get_string (keyfile, groups[i], "URL", NULL);
-		GtkImage *missing = GTK_IMAGE (gtk_image_new_from_icon_name("desktop-webmail", GTK_ICON_SIZE_LARGE_TOOLBAR));
 		GdkPixbuf *missing_buf =  gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
 		                                                    "desktop-webmail",
 		                                                    24,
 		                                                    0, NULL);
+
+		if (!g_strcmp0 (group_name, global_config->default_provider))
+			default_i = i;
 
 		if (!icon_url || !action_url || !group_name) {
 			g_free (icon_url);
@@ -164,14 +164,13 @@ static GHashTable*
 parse_fields_from_mailto (const gchar* mailto)
 {
 	GHashTable *fields = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, g_free);
-	gint len = strlen (mailto);
 	gchar* parse = g_strdup (mailto + strlen ("mailto:"));
 	gchar* start = parse;
 	gchar* delim = strstr (start, "?");
 	gchar** args, **argi = NULL;
 	gint noargs = 0;
 
-	if (delim > 0)
+	if (delim != NULL)
 		*delim = 0;
 	else
 		noargs = 1;
@@ -221,7 +220,6 @@ fill_url_template_from_mailto (const gchar* url_template, const gchar* mailto)
 			g_free(old_result);
 			break;
 		} else if (*iter == '%' && iter < end) {
-			gchar* snippet;
 			gchar* old_result = result;
 			gchar *replace_key, *replace;
 			*iter = 0;
@@ -286,7 +284,6 @@ update_mailto_preference (GtkDialog *dialog, struct _FormWidgets *form_widgets)
 	GtkComboBox *combo = GTK_COMBO_BOX (form_widgets->combo);
 	GtkCheckButton *checkbutton = GTK_CHECK_BUTTON (form_widgets->checkbutton);
 	GtkTreeModel *model = GTK_TREE_MODEL (gtk_combo_box_get_model (combo));
-	int active = gtk_combo_box_get_active (combo);
 	GtkTreeIter iter;
 	gchar *name = NULL;
 	gchar *url = NULL;
@@ -339,7 +336,7 @@ static void
 run_gtk_config (gint *argcp, gchar*** argvp)
 {
 	GtkDialog *dialog;
-	GtkWidget *combo, *title, *align, *bbox, *content_box, *title_box, *content2_box, *remember_checkbox;
+	GtkWidget *combo, *title, *content_box, *title_box, *content2_box, *remember_checkbox;
 	GtkTreeStore *store;
 	GtkTreeViewColumn *column;
 	GtkCellRenderer *renderer;
