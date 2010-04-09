@@ -276,6 +276,8 @@ flush_config_data (const gchar *outbuf, gsize len)
 	GFileOutputStream *ostream = g_file_replace (ofile, NULL, TRUE, G_FILE_CREATE_NONE, NULL, NULL);
 	g_output_stream_write (G_OUTPUT_STREAM (ostream), outbuf, len, NULL, NULL);
 	g_output_stream_close (G_OUTPUT_STREAM (ostream), NULL, NULL);
+	g_object_unref (ostream);
+	g_object_unref (ofile);
 }
 
 static void
