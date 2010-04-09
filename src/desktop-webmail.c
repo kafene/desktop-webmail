@@ -69,10 +69,11 @@ ensure_dirs ()
 {
 	gchar *home = getenv ("HOME");
 	g_assert (home);
-	if(cache_dir)
-		return;
-	if(config_dir)
-		return;
+
+	/* ensure_dirs must only be called once */
+	g_return_val_if_fail (!cache_dir, FALSE);
+	g_return_val_if_fail (!config_dir, FALSE);
+
 	cache_dir = g_strdup_printf ("%s/%s", home, CACHE_DIR_PATH);
 	config_dir = g_strdup_printf ("%s/%s", home, CONFIG_DIR_PATH);
 	config_path = g_strdup_printf ("%s/%s", config_dir, CONFIG_KEYFILE_NAME);
