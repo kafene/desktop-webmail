@@ -1,0 +1,60 @@
+2010-04-09  Alexander Sack  <asac@ubuntu.com>
+
+	Release 001
+
+2010-04-09  Alexander Sack  <asac@ubuntu.com>
+
+	* fix build failures in desktop-webmail.c due to -Wall -Werror
+
+2010-04-09  Alexander Sack  <asac@ubuntu.com>
+
+	* use -Wall, -Werror and -pedantic as default CFLAGS
+
+2010-04-09  Alexander Sack  <asac@ubuntu.com>
+
+	use 'Ask again' rather than 'Ask everytime' and adjust de.po accordingly
+
+2010-04-09  Alexander Sack  <asac@ubuntu.com>
+
+	fix mem leak - unref file and file outputstream in flush_config_data
+
+2010-04-09  Alexander Sack  <asac@ubuntu.com>
+
+	* return FALSE if ensure_dirs is called twice
+
+2010-04-08  Alexander Sack  <asac@ubuntu.com>
+
+	drop opera and fastmail from webmailers.ini for now
+
+2010-04-08  Alexander Sack  <asac@ubuntu.com>
+
+	fix syntax in default-apps .xml
+
+2010-04-08  Alexander Sack  <asac@ubuntu.com>
+
+	fix data/desktop-webmail.desktop.in to have [Desktop Entry] and Encoding=UTF-8
+
+2010-04-07  Alexander Sack  <asac@ubuntu.com>
+
+	fix default apps xml and use desktop-webmail as filename
+
+2010-04-07  Alexander Sack  <asac@ubuntu.com>
+
+	* introduce ALL_LINGUAS in configure.ac and add 'de' to get started
+
+2010-04-07  Alexander Sack  <asac@ubuntu.com>
+
+	* fix .desktop key syntax for GenericName
+
+2010-04-07  Alexander Sack  <asac@ubuntu.com>
+
+	* add autotools magic to Makefile.am to properly process/install .desktop.in files
+
+2010-04-07  Alexander Sack  <asac@ubuntu.com>
+
+	* dont run xdg-open if user 'rejected' the config dialog
+
+2010-04-07  Alexander Sack  <asac@ubuntu.com>
+
+	* import source tree for desktop-webmail 001 candidate
+
