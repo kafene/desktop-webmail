@@ -33,7 +33,7 @@ msgid "Email"
 msgstr ""
 
 #: ../data/desktop-webmail.desktop.in.h:3
-msgid "Webmail"
+msgid "Desktop Webmail"
 msgstr ""
 
 #~ msgid "Don't ask again"
