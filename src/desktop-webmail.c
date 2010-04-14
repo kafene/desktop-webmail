@@ -34,6 +34,7 @@
 
 #define WEBMAILER_KEYFILE_NAME "webmailers.ini"
 #define WEBMAILER_KEYFILE_PATH_DEFAULT pkgdatadir
+#define WEBMAILER_SYS_DIR sysconfpkgdir
 
 #define CONFIG_KEYFILE_NAME "desktop-webmail.ini"
 #define CONFIG_KEYFILE_PATH_DEFAULT ".config/desktop-webmail/desktop-webmail.ini"
@@ -64,6 +65,8 @@ static struct _Config *global_config;
 static gchar *cache_dir = NULL;
 static gchar *config_dir = NULL;
 static gchar *config_path = NULL;
+static gchar *webmailer_user_path = NULL;
+static gchar *webmailer_sys_path = NULL;
 static gboolean cancelled = FALSE;
 
 
@@ -80,6 +83,8 @@ ensure_dirs ()
 	cache_dir = g_strdup_printf ("%s/%s", home, CACHE_DIR_PATH);
 	config_dir = g_strdup_printf ("%s/%s", home, CONFIG_DIR_PATH);
 	config_path = g_strdup_printf ("%s/%s", config_dir, CONFIG_KEYFILE_NAME);
+	webmailer_user_path = g_strdup_printf ("%s/%s", config_dir, WEBMAILER_KEYFILE_NAME);
+	webmailer_sys_path = g_strdup_printf ("%s/%s", WEBMAILER_SYS_DIR, WEBMAILER_KEYFILE_NAME);
 	mkdir (cache_dir, 0700);
 	mkdir (config_dir, 0700);
 	return TRUE;
@@ -103,21 +108,12 @@ load_config_from_ini (struct _Config *config)
 	config->default_url = g_key_file_get_string (keyfile, "Config", "default-url", NULL);
 }
 
-static gint
-load_model_from_ini (GtkTreeStore *store)
+static void
+add_keyfile_to_tree_store (GtkTreeStore *store, GKeyFile *keyfile)
 {
-	GKeyFile *keyfile = g_key_file_new ();
 	gchar **groups;
-	gint i, default_i = 0;
 	gsize groups_len;
-	const gchar *paths[] = { WEBMAILER_KEYFILE_PATH_DEFAULT, "." };
-
-	textdomain (GETTEXT_PACKAGE);
-
-	g_assert (store);
-
-	if (!g_key_file_load_from_dirs (keyfile, WEBMAILER_KEYFILE_NAME, paths, NULL, G_KEY_FILE_NONE,  NULL))
-		goto out;
+	gint i;
 
 	groups = g_key_file_get_groups (keyfile, &groups_len);
 
@@ -130,9 +126,6 @@ load_model_from_ini (GtkTreeStore *store)
 		                                                    "desktop-webmail",
 		                                                    24,
 		                                                    0, NULL);
-
-		if (!g_strcmp0 (group_name, global_config->default_provider))
-			default_i = i;
 
 		if (!icon_url || !action_url || !group_name) {
 			g_free (icon_url);
@@ -153,11 +146,33 @@ load_model_from_ini (GtkTreeStore *store)
 		g_free (group_name);
 		g_free (action_url);
 	}
+	g_strfreev (groups);
+}
 
-out:
+static void
+load_model_from_ini (GtkTreeStore *store)
+{
+	GKeyFile *keyfile = g_key_file_new ();
+	GKeyFile *keyfile_user_config = g_key_file_new ();
+	GKeyFile *keyfile_system_config = g_key_file_new ();
+	const gchar *paths[] = { WEBMAILER_KEYFILE_PATH_DEFAULT, "." };
+
+	g_assert (store);
+
+	textdomain (GETTEXT_PACKAGE);
+
+	g_key_file_load_from_dirs (keyfile, WEBMAILER_KEYFILE_NAME, paths, NULL, G_KEY_FILE_NONE,  NULL);
+	add_keyfile_to_tree_store (store, keyfile);
+	
+	g_key_file_load_from_file (keyfile_user_config, webmailer_user_path, G_KEY_FILE_NONE,  NULL);
+	add_keyfile_to_tree_store (store, keyfile_user_config);
+
+	g_key_file_load_from_file (keyfile_system_config, webmailer_sys_path, G_KEY_FILE_NONE,  NULL);
+	add_keyfile_to_tree_store (store, keyfile_system_config);
+
 	g_key_file_free (keyfile);
-
-	return default_i;
+	g_key_file_free (keyfile_user_config);
+	g_key_file_free (keyfile_system_config);
 }
 
 static GHashTable*
@@ -332,6 +347,57 @@ dialog_response_cb (GtkDialog *dialog,
 	gtk_main_quit();
 }
 
+static gint
+compare_str_column_name (GtkTreeModel *model,
+                         GtkTreeIter *a,
+                         GtkTreeIter *b,
+                         gpointer user_data)
+{
+
+	gchar *name_a, *name_b;
+	gint res;
+
+	gtk_tree_model_get (model, a, COLUMN_NAME, &name_a, -1);
+	gtk_tree_model_get (model, b, COLUMN_NAME, &name_b, -1);
+
+	res = g_strcmp0 (name_a, name_b);
+
+	g_free(name_a);
+	g_free(name_b);
+
+	return res;	
+}
+
+static gboolean
+set_active_if_default (GtkTreeModel *model,
+                       GtkTreePath *path,
+                       GtkTreeIter *iter,
+                       gpointer data)
+{
+	GtkComboBox *box = GTK_COMBO_BOX (data);
+	gchar *name = NULL;
+
+	gtk_tree_model_get (model, iter, COLUMN_NAME, &name, -1);
+
+	if (!g_strcmp0 (name, global_config->default_provider)) {
+		gtk_combo_box_set_active_iter (box, iter);
+		g_free (name);
+		return TRUE;
+	}
+	g_free (name);
+	return FALSE;
+}
+
+
+static void
+select_default (GtkTreeModel *model, GtkComboBox *box)
+{
+
+	gtk_tree_model_foreach (model,
+	                        set_active_if_default,
+	                        box);
+}
+
 static void
 run_gtk_config (gint *argcp, gchar*** argvp)
 {
@@ -341,7 +407,6 @@ run_gtk_config (gint *argcp, gchar*** argvp)
 	GtkTreeViewColumn *column;
 	GtkCellRenderer *renderer;
 	struct _FormWidgets *form_widgets = g_new0 (struct _FormWidgets, 1);
-	int default_i;
 
 	gtk_init (argcp, argvp);
 
@@ -364,11 +429,13 @@ run_gtk_config (gint *argcp, gchar*** argvp)
 	gtk_box_pack_start (GTK_BOX (title_box), title, TRUE, TRUE, 5);
 
 	store = gtk_tree_store_new (4, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, GDK_TYPE_PIXBUF);
-	default_i = load_model_from_ini (store);
+	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (store), COLUMN_NAME, compare_str_column_name, NULL, NULL);
+	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (store), COLUMN_NAME, GTK_SORT_ASCENDING);
+	load_model_from_ini (store);
 
 	combo = gtk_combo_box_new ();
 	gtk_combo_box_set_model (GTK_COMBO_BOX (combo), GTK_TREE_MODEL (store));
-	gtk_combo_box_set_active (GTK_COMBO_BOX (combo), default_i);
+	select_default (GTK_TREE_MODEL (store), GTK_COMBO_BOX (combo));
 
 	column = gtk_tree_view_column_new ();
 
