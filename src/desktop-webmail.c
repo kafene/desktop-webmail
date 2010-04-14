@@ -44,6 +44,7 @@ enum {
 	COLUMN_ICONURL,
 	COLUMN_ACTIONURL,
 	COLUMN_PIXBUF,
+	COLUMN_INBOXURL,
 	COLUMN_END
 };
 
@@ -53,6 +54,7 @@ struct _Config
 	gboolean remember;
 	gchar *default_provider;
 	gchar *default_url;
+	gchar *default_inbox;
 };
 
 struct _FormWidgets
@@ -106,6 +108,7 @@ load_config_from_ini (struct _Config *config)
 	config->remember = g_key_file_get_boolean (keyfile, "Config", "remember", NULL);
 	config->default_provider = g_key_file_get_string (keyfile, "Config", "default-provider", NULL);
 	config->default_url = g_key_file_get_string (keyfile, "Config", "default-url", NULL);
+	config->default_inbox = g_key_file_get_string (keyfile, "Config", "default-inbox", NULL);
 }
 
 static void
@@ -122,6 +125,7 @@ add_keyfile_to_tree_store (GtkTreeStore *store, GKeyFile *keyfile)
 		gchar *group_name = g_strdup (groups[i]);
 		gchar *icon_url = g_key_file_get_string (keyfile, groups[i], "ICON", NULL);
 		gchar *action_url = g_key_file_get_string (keyfile, groups[i], "URL", NULL);
+		gchar *inbox_url = g_key_file_get_string (keyfile, groups[i], "INBOX", NULL);
 		GdkPixbuf *missing_buf =  gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
 		                                                    "desktop-webmail",
 		                                                    24,
@@ -140,11 +144,13 @@ add_keyfile_to_tree_store (GtkTreeStore *store, GKeyFile *keyfile)
 			COLUMN_ICONURL, icon_url,
 			COLUMN_ACTIONURL, action_url,
 			COLUMN_PIXBUF, missing_buf,
+			COLUMN_INBOXURL, inbox_url,
 			-1);
 
 		g_free (icon_url);
 		g_free (group_name);
 		g_free (action_url);
+		g_free (inbox_url);
 	}
 	g_strfreev (groups);
 }
@@ -302,6 +308,7 @@ update_mailto_preference (GtkDialog *dialog, struct _FormWidgets *form_widgets)
 	GtkTreeIter iter;
 	gchar *name = NULL;
 	gchar *url = NULL;
+	gchar *inbox = NULL;
 	gchar *outbuf = NULL;
 	gsize len;
 
@@ -310,10 +317,12 @@ update_mailto_preference (GtkDialog *dialog, struct _FormWidgets *form_widgets)
 
 	gtk_tree_model_get (model, &iter, COLUMN_NAME, &name, -1);
 	gtk_tree_model_get (model, &iter, COLUMN_ACTIONURL, &url, -1);
+	gtk_tree_model_get (model, &iter, COLUMN_INBOXURL, &inbox, -1);
 
 	g_key_file_set_boolean  (global_config->keyfile, "Config", "remember", !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (checkbutton)));
 	g_key_file_set_string  (global_config->keyfile, "Config", "default-provider", name);
 	g_key_file_set_string  (global_config->keyfile, "Config", "default-url", url);
+	g_key_file_set_string  (global_config->keyfile, "Config", "default-inbox", inbox);
 
 	outbuf = g_key_file_to_data (global_config->keyfile, &len, NULL);
 	flush_config_data (outbuf, len);
@@ -428,7 +437,7 @@ run_gtk_config (gint *argcp, gchar*** argvp)
 
 	gtk_box_pack_start (GTK_BOX (title_box), title, TRUE, TRUE, 5);
 
-	store = gtk_tree_store_new (4, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, GDK_TYPE_PIXBUF);
+	store = gtk_tree_store_new (5, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, GDK_TYPE_PIXBUF, G_TYPE_STRING);
 	gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (store), COLUMN_NAME, compare_str_column_name, NULL, NULL);
 	gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (store), COLUMN_NAME, GTK_SORT_ASCENDING);
 	load_model_from_ini (store);
@@ -492,16 +501,23 @@ int main (int argc, char **argv)
 	   given */
 	if (!global_config->remember ||
 	    !global_config->default_url ||
+	    !global_config->default_inbox ||
 	    !global_config->default_provider ||
-            argc < 2) {
+            (argc == 2 && !g_strcmp0 ("--config", argv[1]))) {
 		run_gtk_config (&argc, &argv);
 	}
 
 	/* if we have an url (argc > 1); parse, and fire up webmail url using
 	   xdg-open */
-	if (argc > 1 && !cancelled) {
+	if (argc > 1 && !g_strcmp0 ("--config", argv[1]) && !cancelled) {
 		url = fill_url_template_from_mailto (global_config->default_url, argv[1]);
 		command = g_strdup_printf ("xdg-open %s", url);
+		printf ("running: %s\n", command);
+		g_spawn_command_line_async (command, NULL);
+	}
+
+	if (argc == 1) {
+		command = g_strdup_printf ("xdg-open %s", global_config->default_inbox);
 		printf ("running: %s\n", command);
 		g_spawn_command_line_async (command, NULL);
 	}
