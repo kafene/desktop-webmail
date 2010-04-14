@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+_Name=Desktop Webmail
+_GenericName=Email
+_Comment=Compose email in browser
+Exec=desktop-webmail --config
+Icon=desktop-webmail
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=GNOME;GTK;Settings;DesktopSettings;

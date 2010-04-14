@@ -2,3 +2,4 @@ src/desktop-webmail.c
 
 # files added by intltool-prepare
 data/desktop-webmail.desktop.in
+data/desktop-webmail-config.desktop.in
