@@ -8,4 +8,4 @@ Icon=desktop-webmail
 Terminal=false
 Type=Application
 StartupNotify=true
-Categories=GNOME;GTK;Settings;DesktopSettings;Application;Network;Email
+Categories=Application;Network;Email
