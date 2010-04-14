@@ -509,7 +509,7 @@ int main (int argc, char **argv)
 
 	/* if we have an url (argc > 1); parse, and fire up webmail url using
 	   xdg-open */
-	if (argc > 1 && !g_strcmp0 ("--config", argv[1]) && !cancelled) {
+	if (argc > 1 && g_strcmp0 ("--config", argv[1]) && !cancelled) {
 		url = fill_url_template_from_mailto (global_config->default_url, argv[1]);
 		command = g_strdup_printf ("xdg-open %s", url);
 		printf ("running: %s\n", command);
