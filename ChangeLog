@@ -1,3 +1,41 @@
+2010-04-15  Alexander Sack  <asac@ubuntu.com>
+
+	Release 002
+
+2010-04-15  Alexander Sack  <asac@ubuntu.com>
+
+	* add desktop-webmail-config.desktop instead ... and register it as translatable file; do not
+	change strings to not breach string freeze in ubuntu
+
+2010-04-15  Alexander Sack  <asac@ubuntu.com>
+
+	* dont ship desktop-webmail.desktop as a setting desktop file anymore
+
+2010-04-15  Alexander Sack  <asac@ubuntu.com>
+
+	fix --config argument not opening urls
+
+2010-04-15  Alexander Sack  <asac@ubuntu.com>
+
+	add INBOX support; and introduce --config argument to support 'just' opening config dialog without INBOX
+
+2010-04-15  Alexander Sack  <asac@ubuntu.com>
+
+	add INBOX info to webmailers.ini
+
+2010-04-15  Alexander Sack  <asac@ubuntu.com>
+
+	make desktop-webmail.c read configs from three places (pkgdatadir, sysconfdir/desktop-webmail/ and $HOME/.config/desktop-webmail)
+
+2010-04-15  Alexander Sack  <asac@ubuntu.com>
+
+	add -Dsysconfpkgdir="/desktop-webmail" to desktop-webmail.c CFLAGS to allow
+	loading config from /etc place
+
+2010-04-11  Alexander Sack  <asac@ubuntu.com>
+
+	change .desktop.in and po/* to refer to 'Desktop Webmail' rather than 'Webmail'
+
 2010-04-09  Alexander Sack  <asac@ubuntu.com>
 
 	Release 001
