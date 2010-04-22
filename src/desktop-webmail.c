@@ -210,10 +210,14 @@ parse_fields_from_mailto (const gchar* mailto)
 		gchar *key = *argi;
 		gchar *value;
 
-		value = strchr (*argi, '=');
-		*value = 0;
-		value++;
-		g_hash_table_insert (fields, g_ascii_strdown(key, -1), g_strdup (value));
+		value = strchr (key, '=');
+		if (value) {
+			*value = 0;
+			value++;
+			g_hash_table_insert (fields, g_ascii_strdown(key, -1), g_strdup (value));
+		} else {
+			g_hash_table_insert (fields, key, NULL);
+		}
 
 		argi++;
 	}
