@@ -203,7 +203,7 @@ parse_fields_from_mailto (const gchar* mailto)
 		goto out;
 
 	start = delim +1;
-	args = g_strsplit_set (start, "&#?", 0);
+	args = g_strsplit_set (start, "&#", 0);
 	argi = args;
 
 	while (argi && *argi) {
