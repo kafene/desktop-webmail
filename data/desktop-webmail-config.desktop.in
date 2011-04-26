@@ -1,10 +1,10 @@
 [Desktop Entry]
 Encoding=UTF-8
-_Name=Desktop Webmail
-_GenericName=Email
-_Comment=Compose email in browser
+_Name=Desktop Webmail Configuration
+_GenericName=Desktop Webmail Configuration
+_Comment=Configure handling of email in browser
 Exec=desktop-webmail --config
-Icon=desktop-webmail
+Icon=desktop-webmail-config
 Terminal=false
 Type=Application
 StartupNotify=true
