@@ -417,7 +417,6 @@ run_gtk_config (gint *argcp, gchar*** argvp)
 	GtkDialog *dialog;
 	GtkWidget *combo, *title, *content_box, *title_box, *content2_box, *remember_checkbox;
 	GtkTreeStore *store;
-	GtkTreeViewColumn *column;
 	GtkCellRenderer *renderer;
 	struct _FormWidgets *form_widgets = g_new0 (struct _FormWidgets, 1);
 
@@ -449,8 +448,6 @@ run_gtk_config (gint *argcp, gchar*** argvp)
 	combo = gtk_combo_box_new ();
 	gtk_combo_box_set_model (GTK_COMBO_BOX (combo), GTK_TREE_MODEL (store));
 	select_default (GTK_TREE_MODEL (store), GTK_COMBO_BOX (combo));
-
-	column = gtk_tree_view_column_new ();
 
 	renderer = gtk_cell_renderer_pixbuf_new ();
 	gtk_cell_renderer_set_padding (renderer, 5, 0);
