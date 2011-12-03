@@ -4,6 +4,7 @@ EXTRA_DIST = \
 	desktop-webmail-config.desktop.in \
 	webmailers.ini \
 	desktop-webmail.xml \
+	desktop-webmail-config.svg \
 	desktop-webmail.svg \
 	$(NULL)
 
@@ -18,6 +19,7 @@ defaultapps_DATA = \
 
 scalableiconsdir = ${datadir}/icons/gnome/scalable/apps/
 scalableicons_DATA = \
+	desktop-webmail-config.svg \
 	desktop-webmail.svg \
 	$(NULL)
 
