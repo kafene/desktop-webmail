@@ -3,8 +3,7 @@ bin_PROGRAMS = desktop-webmail
 
 AM_CFLAGS = \
 	-Wall \
-	-Werror \
-	-pedantic
+	-Werror
 
 desktop_webmail_SOURCE = desktop-webmail.c
 desktop_webmail_CFLAGS = $(AM_CFLAGS) $(CFLAGS) $(UI_CFLAGS) -Dpkgdatadir=\"$(pkgdatadir)\" -Dsysconfpkgdir=\"$(sysconfdir)/desktop-webmail\"
