@@ -2,10 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: desktop-webmail\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-07 02:31+0200\n"
+"POT-Creation-Date: 2011-12-03 11:27+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Sense Hofstede <qense@ubuntu.com>\n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,32 +14,46 @@ msgstr ""
 "X-Poedit-Country: NL\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: ../src/desktop-webmail.c:317
+#: ../src/desktop-webmail.c:427
 msgid "Webmail Configuration"
 msgstr "Webmailinstellingen"
 
-#: ../src/desktop-webmail.c:328
+#: ../src/desktop-webmail.c:438
 msgid "Select your webmail provider:"
 msgstr "Kies uw webmailaanbieder:"
 
-#: ../src/desktop-webmail.c:354
+#: ../src/desktop-webmail.c:464
 msgid "Ask again"
 msgstr "Opnieuw vragen"
 
 #: ../data/desktop-webmail.desktop.in.h:1
-msgid "Compose email in browser"
-msgstr "Stel e-mail op in browser"
+msgid "Compose New Message"
+msgstr "Nieuw bericht opstellen"
 
 #: ../data/desktop-webmail.desktop.in.h:2
-msgid "Email"
-msgstr "E-mail"
+msgid "Compose email in browser"
+msgstr "Stel e-mail op in browser"
 
 #: ../data/desktop-webmail.desktop.in.h:3
 msgid "Desktop Webmail"
 msgstr ""
 
+#: ../data/desktop-webmail.desktop.in.h:4
+msgid "Email"
+msgstr "E-mail"
+
+#: ../data/desktop-webmail-config.desktop.in.h:1
+#, fuzzy
+msgid "Configure handling of email in browser"
+msgstr "Stel e-mail op in browser"
+
+#: ../data/desktop-webmail-config.desktop.in.h:2
+#, fuzzy
+msgid "Desktop Webmail Configuration"
+msgstr "Webmailinstellingen"
+
 #~ msgid "Don't ask again"
 #~ msgstr "Niet meer vragen"
+
 #~ msgid "Remember"
 #~ msgstr "Onthouden"
-
