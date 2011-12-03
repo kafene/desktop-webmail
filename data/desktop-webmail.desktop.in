@@ -3,9 +3,17 @@ Encoding=UTF-8
 _Name=Desktop Webmail
 _GenericName=Email
 _Comment=Compose email in browser
-Exec=desktop-webmail %s
+Exec=desktop-webmail %U
 Icon=desktop-webmail
 Terminal=false
 Type=Application
 StartupNotify=true
 Categories=Application;Network;Email
+MimeType=x-scheme-handler/mailto
+X-Ayatana-Desktop-Shortcuts=Compose
+
+[Compose Shortcut Group]
+_Name=Compose New Message
+Exec=desktop-webmail mailto:%U
+TargetEnvironment=Messaging Menu;Unity
+
