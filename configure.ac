@@ -1,5 +1,5 @@
 AC_PREREQ(2.59)
-AC_INIT(desktop-webmail, 002, asac@canonical.com)
+AC_INIT(desktop-webmail, 003, asac@ubuntu.com)
 AC_CONFIG_SRCDIR([src/desktop-webmail.c])
 AC_CONFIG_HEADER([config.h])
 AM_INIT_AUTOMAKE
