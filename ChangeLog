@@ -1,3 +1,74 @@
+2011-12-03  Alexander Sack  <asac@jwsdot.com>
+
+	Release 003
+
+2011-12-03  Alexander Sack  <asac@jwsdot.com>
+
+	bump version to 003 to prepare release and use @ubuntu.com as this is now a spare-time project
+
+2011-12-03  Alexander Sack  <asac@jwsdot.com>
+
+	stop building with -pedantic to make release tarball consumption less fragile lp:651183
+
+2011-12-03  Alexander Sack  <asac@jwsdot.com>
+
+	add hu to ALL_LINGUAS and run make update-po
+
+2011-12-03  Alexander Sack  <asac@jwsdot.com>
+
+	add hungarian translation by István Nyitrai
+
+2010-05-02  Nyitrai István  <sianis@tiadlan>
+
+	Adding Hungarian translation
+
+2011-12-03  Alexander Sack  <asac@jwsdot.com>
+
+	make update-po and add missing de and nl translation for 'Compose New Message' msgid
+
+2011-12-03  Alexander Sack  <asac@jwsdot.com>
+
+	add nl to ALL_LINGUAS
+
+2011-12-03  Alexander Sack  <asac@jwsdot.com>
+
+	improve .desktop file to include mime-type and support unity lp:754321
+	- fixes desktop-webmail can no longer be selected as default mail application
+	- thx to TiCPU (jeromepoulin) for the basics
+
+2011-12-03  Alexander Sack  <asac@jwsdot.com>
+
+	drop not used variable in run_gtk_config; fixes gcc 4.6 build failure
+
+2011-12-03  Alexander Sack  <asac@jwsdot.com>
+
+	fix: Icons & app names identical for desktop-email & desktop-email-config lp:769235
+	- merge lp:~ogra/desktop-webmail/lp769235
+	- thanks to ogra and tobin
+
+2011-04-26  Oliver Grawert  <ogra@ubuntu.com>
+
+	adjust the desktop-webmail-config .desktop file to have more distinctive text, add a desktop-webmail-config.svg so the menu entry looks different
+
+2010-07-16  Alexander Sack  <asac@ubuntu.com>
+
+	merge dutch translations submitted by Sense Hofstede <qense@ubuntu.com> from
+	lp:~qense/desktop-webmail/dutch-translations
+
+2010-04-14  Sense Hofstede  <qense@ubuntu.com>
+
+	Adding Dutch translations
+
+2010-04-22  Alexander Sack  <asac@ubuntu.com>
+
+	Make mailto: url parser more robust; don't expect the parameter part of an url to
+	perfectly split in key/value pairs
+
+2010-04-22  Alexander Sack  <asac@ubuntu.com>
+
+	'?' is not a delimiter in the parameter part of mailto: urls; this also
+	caused a crash whe opening urls of form like: mailto:name@domain.tld?parameter=This?Crashes
+
 2010-04-15  Alexander Sack  <asac@ubuntu.com>
 
 	Release 002
