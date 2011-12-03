@@ -7,38 +7,50 @@ msgid ""
 msgstr ""
 "Project-Id-Version:desktop-webmail\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-02 11:51+0200\n"
+"POT-Creation-Date: 2011-12-03 11:27+0100\n"
 "PO-Revision-Date: 2010-05-02 11:51+0200\n"
 "Last-Translator: Nyitrai István <sianis@gmail.com>\n"
 "Language-Team: Hungarian\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../src/desktop-webmail.c:428
+#: ../src/desktop-webmail.c:427
 msgid "Webmail Configuration"
 msgstr "Webmail beállítása"
 
-#: ../src/desktop-webmail.c:439
+#: ../src/desktop-webmail.c:438
 msgid "Select your webmail provider:"
 msgstr "Válassza ki a webmail-szolgáltatóját:"
 
-#: ../src/desktop-webmail.c:467
+#: ../src/desktop-webmail.c:464
 msgid "Ask again"
 msgstr "Kérdezze újra"
 
 #: ../data/desktop-webmail.desktop.in.h:1
-#: ../data/desktop-webmail-config.desktop.in.h:1
+msgid "Compose New Message"
+msgstr ""
+
+#: ../data/desktop-webmail.desktop.in.h:2
 msgid "Compose email in browser"
 msgstr "E-mailek írása a böngészőben"
 
-#: ../data/desktop-webmail.desktop.in.h:2
-#: ../data/desktop-webmail-config.desktop.in.h:2
+#: ../data/desktop-webmail.desktop.in.h:3
 msgid "Desktop Webmail"
 msgstr "Asztali webmail"
 
-#: ../data/desktop-webmail.desktop.in.h:3
-#: ../data/desktop-webmail-config.desktop.in.h:3
+#: ../data/desktop-webmail.desktop.in.h:4
 msgid "Email"
 msgstr "E-mail"
+
+#: ../data/desktop-webmail-config.desktop.in.h:1
+#, fuzzy
+msgid "Configure handling of email in browser"
+msgstr "E-mailek írása a böngészőben"
+
+#: ../data/desktop-webmail-config.desktop.in.h:2
+#, fuzzy
+msgid "Desktop Webmail Configuration"
+msgstr "Webmail beállítása"
